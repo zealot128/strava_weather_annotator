@@ -7,4 +7,9 @@ class TripsController < ApplicationController
   def show
   end
 
+  def refresh
+    Trip.refresh(current_user)
+    redirect_to :trips
+  end
+
 end
