@@ -8,6 +8,9 @@ class CreateTrips < ActiveRecord::Migration
       t.string :link
       t.string :strava_id
 
+      t.float :distance
+      t.string :activity_type
+
       t.timestamps null: false
     end
   end

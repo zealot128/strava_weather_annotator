@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :trips
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -8,6 +9,10 @@ class User < ActiveRecord::Base
          user.name = auth['info']['name'] || ""
       end
     end
+  end
+
+  def strava_client
+    @strava_client ||= Strava::Api::V3::Client.new(:access_token => access_token)
   end
 
 end

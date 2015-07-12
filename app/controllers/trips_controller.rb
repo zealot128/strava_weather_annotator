@@ -2,6 +2,7 @@ class TripsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @trips = current_user.trips.order('date desc')
   end
 
   def show

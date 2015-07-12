@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150711195310) do
+ActiveRecord::Schema.define(version: 20150712074925) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "trips", force: :cascade do |t|
     t.integer  "user_id"
@@ -20,11 +23,14 @@ ActiveRecord::Schema.define(version: 20150711195310) do
     t.text     "description"
     t.string   "link"
     t.string   "strava_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.float    "distance"
+    t.string   "activity_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.text     "polyline"
   end
 
-  add_index "trips", ["user_id"], name: "index_trips_on_user_id"
+  add_index "trips", ["user_id"], name: "index_trips_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -36,4 +42,19 @@ ActiveRecord::Schema.define(version: 20150711195310) do
     t.string   "profile_picture_url"
   end
 
+  create_table "weather_informations", force: :cascade do |t|
+    t.integer  "trip_id"
+    t.integer  "offset"
+    t.datetime "datetime"
+    t.json     "data"
+    t.float    "lat"
+    t.float    "lon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "weather_informations", ["trip_id"], name: "index_weather_informations_on_trip_id", using: :btree
+
+  add_foreign_key "trips", "users"
+  add_foreign_key "weather_informations", "trips"
 end

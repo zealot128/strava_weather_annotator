@@ -1,2 +1,14 @@
-= link_to refresh_tips, class: 'btn btn-primary' do
+= link_to refresh_trips_path, data: { method: :post },class: 'btn btn-primary' do
   | Refresh recent trips from Strava
+
+
+h2 recent trips
+
+- @trips.each do |trip|
+  .panel.panel-default
+    .panel-heading: h3.panel-title
+      small> = l(Time.parse(trip.date), format: :short)
+      = trip.name
+      small<
+        = (trip.distance / 1000).round(1)
+        |km
