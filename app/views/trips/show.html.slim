@@ -1,0 +1,19 @@
+h2 = @trip.name
+
+
+p
+  | Start-Time: #{l @trip.start_datetime}
+
+
+table.table
+  thead
+    tr
+      th time
+      th
+      th temp
+      th precip
+      th wind
+      th humidity
+      th pressure
+  tbody
+    = render @trip.weather_informations

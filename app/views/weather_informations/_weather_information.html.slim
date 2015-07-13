@@ -1,0 +1,21 @@
+tr.weather-information
+  td
+    small = l weather_information.datetime, format: :short
+  td
+    i.climacon(class='#{weather_information.image_classes}')
+    = weather_information.summary
+  td
+    = weather_information.temperature
+  td
+    = weather_information.precip_intensity
+    - if weather_information.precip_probability > 0
+      span<
+        | (#{number_to_percentage weather_information.precip_probability, precision: 0})
+  td
+    = weather_information.wind_speed
+    span<= weather_information.wind_bearing
+  td
+    = weather_information.humidity
+  td
+    = raw weather_information.pressure
+

@@ -6,10 +6,11 @@ class TripsController < ApplicationController
   end
 
   def show
+    @trip = current_user.trips.find params[:id]
   end
 
   def refresh
-    Trip.refresh(current_user)
+    StravaRefresh.new(current_user).run
     redirect_to :trips
   end
 

@@ -7,8 +7,9 @@ h2 recent trips
 - @trips.each do |trip|
   .panel.panel-default
     .panel-heading: h3.panel-title
-      small> = l(Time.parse(trip.date), format: :short)
-      = trip.name
+      small> = l(trip.start_datetime, format: :short)
+      = link_to trip do
+        = trip.name
       small<
         = (trip.distance / 1000).round(1)
         |km
