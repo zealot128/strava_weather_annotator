@@ -1,9 +1,7 @@
-= link_to refresh_trips_path, data: { method: :post },class: 'btn btn-primary' do
-  | Refresh recent trips from Strava
+h1 Recent Trips
 
-
-h2 recent trips
-
+- if @trips.blank?
+  p.alert.alert-warning No trips yet, try refreshing. Only trips from the last 2 weeks will be shown here.
 - @trips.each do |trip|
   .panel.panel-default
     .panel-heading: h3.panel-title
@@ -13,3 +11,6 @@ h2 recent trips
       small<
         = (trip.distance / 1000).round(1)
         |km
+p = link_to refresh_trips_path, data: { method: :post },class: 'btn btn-primary' do
+  | Refresh recent trips from Strava
+

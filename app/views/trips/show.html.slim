@@ -17,3 +17,9 @@ table.table
       th pressure
   tbody
     = render @trip.weather_informations
+
+
+p = link_to @trip.strava_url, class: 'btn btn-default' do
+  | View on Strava
+
+

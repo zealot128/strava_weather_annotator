@@ -44,8 +44,12 @@ class WeatherInformation < ActiveRecord::Base
 
   def wind_speed
     s = data['currently']['windSpeed']
-    bft = (s / 0.8360 )**(Rational(2,3))
-    "#{s.round(1)} m/s (#{bft.round} Bft)"
+    "#{s.round(1)} m/s (#{bft} Bft)"
+  end
+
+  def bft
+    s = data['currently']['windSpeed']
+    ((s / 0.8360 )**(Rational(2,3))).round
   end
 
   def wind_bearing

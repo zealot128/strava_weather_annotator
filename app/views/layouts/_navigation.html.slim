@@ -1,5 +1,4 @@
-/ navigation styled for Bootstrap 3.0
-nav.navbar.navbar-inverse.navbar-fixed-top
+nav.navbar.navbar-default
   .container
     .navbar-header
       button.navbar-toggle[type="button" data-toggle="collapse" data-target=".navbar-collapse"]
@@ -10,4 +9,8 @@ nav.navbar.navbar-inverse.navbar-fixed-top
       = link_to 'Home', root_path, class: 'navbar-brand'
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        == render 'layouts/navigation_links'
+        - if user_signed_in?
+          li = link_to 'Trips', trips_path
+          li = link_to 'Sign out', signout_path
+        - else
+          li = link_to 'Sign in', signin_path

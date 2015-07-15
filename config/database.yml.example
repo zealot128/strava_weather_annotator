@@ -1,0 +1,8 @@
+development:
+  database: strava_weather_dev
+  adapter: postgresql
+
+test:
+  database: strava_weather_test
+  adapter: postgresql
+

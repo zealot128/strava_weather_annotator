@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.2'
+gem 'backport_new_renderer' # TODO Rails 5
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -10,6 +11,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
 end
 gem 'bootstrap-sass'
+gem 'bootswatch-rails'
 
 gem 'omniauth'
 gem 'strava-api-v3'
