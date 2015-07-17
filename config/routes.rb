@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     collection do
       post :refresh
     end
+    get 'comment/new' => 'comments#new'
+    post 'comment' => 'comments#create', as: :comment_create
   end
   root to: 'pages#index'
 end

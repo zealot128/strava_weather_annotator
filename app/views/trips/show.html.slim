@@ -23,7 +23,11 @@
   .panel-footer
 
 
-    p = link_to @trip.strava_url, class: 'btn btn-default' do
-      | View on Strava
+    p
+      = link_to @trip.strava_url, class: 'btn btn-default' do
+        | View on Strava
+      = ' '
+      = link_to trip_comment_new_path(@trip), class: 'btn btn-primary' do
+        | Edit description / add weather comment
 
 

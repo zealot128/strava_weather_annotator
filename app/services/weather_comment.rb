@@ -6,7 +6,7 @@ class WeatherComment
 
   def render
     <<-DOC.strip_heredoc
-      Weather summary: #{summary.join('/')}
+      #{summary.join('/')}
       Temperature: #{temperature},
       rel.Hum.: #{humidity},
       Wind: #{wind}, #{wind_bearing.join('/')}

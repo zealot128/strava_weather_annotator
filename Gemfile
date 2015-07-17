@@ -14,13 +14,10 @@ gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 
 gem 'omniauth'
-gem 'strava-api-v3'
-gem 'omniauth-strava'
+gem 'strava-api-v3', github: 'zealot128-os/strava-api-v3'
+gem 'omniauth-strava', github: 'zealot128-os/omniauth-strava'
 gem 'forecast_io'
 gem 'polylines'
-
-
-
 
 gem 'simple_form'
 gem 'slim-rails'
