@@ -1,16 +1,43 @@
 h1 Recent Trips
 
-- if @trips.blank?
-  p.alert.alert-warning No trips yet, try refreshing. Only trips from the last 2 weeks will be shown here.
-- @trips.each do |trip|
-  .panel.panel-default
-    .panel-heading: h3.panel-title
-      small> = l(trip.start_datetime, format: :short)
-      = link_to trip do
-        = trip.name
-      small<
-        = (trip.distance / 1000).round(1)
-        |km
-p = link_to refresh_trips_path, data: { method: :post },class: 'btn btn-primary' do
-  | Refresh recent trips from Strava
+.row
+  .col-sm-8
+    - if @trips.blank?
+      p.alert.alert-warning No trips yet, try refreshing. Only trips from the last 2 weeks will be shown here.
+    - @trips.each do |trip|
+      .panel.panel-default
+        .panel-heading: h3.panel-title
+          small> = l(trip.start_datetime, format: :short)
+          = link_to trip do
+            = trip.name
+          small<
+            = (trip.distance / 1000).round(1)
+            |km
 
+    - if @api_allowance.can_strava?
+      p = link_to refresh_trips_path, data: { method: :post } ,class: 'btn btn-primary' do
+        | Refresh recent trips from Strava + Weather
+
+  .col-sm-4
+
+    p
+      span.glyphicon.glyphicon-question-sign> data-toggle="tooltip" title='This app depends on Strava + Forecast.io web sites. Those Websites have a limit of requests per day that we can use. The available requests are shared equally by all users'
+      |Daily API-Usage
+      br
+      small Strava
+      .progress
+        - calls = @api_allowance.strava_api_calls
+        - max = @api_allowance.max_strava_calls
+        | #{calls} / #{max}
+        .progress-bar role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: #{calls * 100 / max}%;"
+      br
+      small Forecast.io
+      .progress
+        - calls = @api_allowance.forecast_calls
+        - max = @api_allowance.max_forecast_calls
+        | #{calls} / #{max}
+        .progress-bar role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: #{calls * 100 / max}%;"
+javascript:
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })

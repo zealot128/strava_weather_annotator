@@ -11,7 +11,7 @@ class WeatherComment
       rel.Hum.: #{humidity},
       Wind: #{wind}, #{wind_bearing.join('/')}
 
-      #{@wi.map{|i|i.data['flags']['metno-license']}.uniq}
+      #{@wi.map{|i|i.data['flags']['metno-license']}.uniq.to_sentence}
     DOC
   end
 

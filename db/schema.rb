@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150712194514) do
+ActiveRecord::Schema.define(version: 20150717130730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_logs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "provider"
+    t.date     "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "api_logs", ["user_id", "date", "provider"], name: "index_api_logs_on_user_id_and_date_and_provider", using: :btree
 
   create_table "trips", force: :cascade do |t|
     t.integer  "user_id"

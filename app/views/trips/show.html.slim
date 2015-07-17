@@ -1,25 +1,29 @@
-h2 = @trip.name
+.panel.panel-default
+  .panel-heading
+    h2 = @trip.name
+    p
+      | Start-Time: #{l @trip.start_datetime}
+  .panel-body
+    = simple_format @trip.as_comment
 
 
-p
-  | Start-Time: #{l @trip.start_datetime}
+    table.table
+      thead
+        tr
+          th time
+          th
+          th temp
+          th precip
+          th wind
+          th humidity
+          th cloud cover
+          th pressure
+      tbody
+        = render @trip.weather_informations
+  .panel-footer
 
 
-table.table
-  thead
-    tr
-      th time
-      th
-      th temp
-      th precip
-      th wind
-      th humidity
-      th pressure
-  tbody
-    = render @trip.weather_informations
-
-
-p = link_to @trip.strava_url, class: 'btn btn-default' do
-  | View on Strava
+    p = link_to @trip.strava_url, class: 'btn btn-default' do
+      | View on Strava
 
 

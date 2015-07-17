@@ -47,6 +47,13 @@ class WeatherInformation < ActiveRecord::Base
     "#{s.round(1)} m/s (#{bft} Bft)"
   end
 
+  def cloud_cover
+    s = data['currently']['cloudCover']
+    if s
+      "#{(s * 100).round}%"
+    end
+  end
+
   def bft
     s = data['currently']['windSpeed']
     ((s / 0.8360 )**(Rational(2,3))).round
@@ -75,6 +82,12 @@ class WeatherInformation < ActiveRecord::Base
 
   def temperature
     unit = si? ? "°C" : "°F"
-    data['currently']['temperature'].round(1).to_s + unit
+    real = data['currently']['temperature'].round(1)
+    apparent = data['currently']['apparentTemperature'].try(:round, 1)
+    if apparent and apparent != real
+      "#{real}#{unit} <small>(feel: #{apparent}#{unit})</small>".html_safe
+    else
+      "#{real}#{unit}"
+    end
   end
 end
