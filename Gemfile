@@ -22,6 +22,10 @@ gem 'polylines'
 gem 'simple_form'
 gem 'slim-rails'
 
+group :production do
+  gem 'exception_notification'
+end
+
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'

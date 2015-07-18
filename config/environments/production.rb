@@ -76,4 +76,17 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = YAML.load_file('config/email.yml')
+  config.action_mailer.default_url_options = { :host => "strava-weather.stefanwienert.de" }
+
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+    :email_prefix => "[Strava-Weather] ",
+    :sender_address => %{"strava-weather" <info@podfilter.de>},
+    :exception_recipients => %w{info@stefanwienert.de},
+    ignore_exceptions: ['ActionController::BadRequest'] + ExceptionNotifier.ignored_exceptions,
+    ignore_crawlers: true
+  }
 end
