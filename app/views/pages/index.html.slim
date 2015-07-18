@@ -1,6 +1,26 @@
-h1 Strava Weather Annotations
 
-p In this app, you can see your recent trips on Strava. You can query weather information for the trip (data by Foreground.io) and the app will then comment on the trip with a weather summary.
+.jumbotron
+  h1 Strava Weather
+  p In this app, you can see your recent trips on Strava. You can query weather information for the trip (data provided by Foreground.io) and the app will then comment on the trip with a weather summary.
+  ol
+    li Login via Strava
+    li View weather information on recent trips
+    li
+      | (Optional) Update description of those trips and append weather info:
+      br
+      br
+      = image_tag 'demo.png'
+
+  p: small
+    span.label.label-danger> BETA
+    br
+    | So far, i've only tested the app with my personal trips. At the moment, there is only SI unit support (Sorry Fahrenheit). No Warrenty at all!
+
+  a.btn.btn-primary.btn-lg href='/auth/strava' Login via Strava
 
 
-a.btn.btn-primary.btn-lg href='/auth/strava' Login
+css:
+  .jumbotron ol {
+    font-size: 20px;
+    }
+
