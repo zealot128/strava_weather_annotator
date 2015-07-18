@@ -25,7 +25,7 @@ class Comment
   end
 
   def save
-    api = user.api
+    api = user.strava_client
     api.update_an_activity(trip.strava_id, description: text)
     user.add_log 'strava', "PUT update_an_activity #{trip.strava_id}"
   end
