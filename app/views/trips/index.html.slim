@@ -13,10 +13,16 @@ h1 Recent Trips
           small<
             = (trip.distance / 1000).round(1)
             |km
+          .pull-right
+            - if trip.has_weather_comment?
+              span.glyphicon.glyphicon-ok<> title='Weather description already updated on Strava'
+            - if trip.temperature?
+              i.climacon<>(class='#{trip.icon}')
+              small= trip.temperature
 
     - if @api_allowance.can_strava?
-      p = link_to refresh_trips_path, data: { method: :post } ,class: 'btn btn-primary' do
-        | Refresh recent trips from Strava + Weather
+      p = link_to refresh_trips_path, data: { method: :post, 'disable-with' => "Loading..." }, class: 'btn btn-primary' do
+        | Refresh 3 more trips + weather (also update old trip's title)
 
   .col-sm-4
 

@@ -4,9 +4,8 @@ class Comment
 
 
   def fetch_description
-    response = user.strava_client.retrieve_an_activity(trip.strava_id)
-    user.add_log 'strava', "GET retrieve_an_activity #{trip.strava_id}"
-    self.text = response['description']
+    ApiWrapper::StravaApiWrapper.new(user).fetch_description(trip)
+    self.text = trip.description
   end
 
   def add_weather_information
@@ -25,8 +24,6 @@ class Comment
   end
 
   def save
-    api = user.strava_client
-    api.update_an_activity(trip.strava_id, description: text)
-    user.add_log 'strava', "PUT update_an_activity #{trip.strava_id}"
+    ApiWrapper::StravaApiWrapper.new(user).update_description(trip, text)
   end
 end

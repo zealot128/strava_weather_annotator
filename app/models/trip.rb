@@ -6,6 +6,13 @@ class Trip < ActiveRecord::Base
     "https://www.strava.com/activities/#{strava_id}"
   end
 
+  def has_weather_comment?
+    description && (
+      description.include?('Weather summary') ||
+      description.include?('rel.Hum')
+    )
+  end
+
   def as_comment
     WeatherComment.new(self).render
   end

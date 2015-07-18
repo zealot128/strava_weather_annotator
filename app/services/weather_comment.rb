@@ -15,8 +15,6 @@ class WeatherComment
     DOC
   end
 
-  protected
-
   def wind
     bfts = @wi.map{|i| i.bft}.uniq.sort
     if bfts.count == 1

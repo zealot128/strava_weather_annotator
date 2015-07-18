@@ -5,8 +5,7 @@ class StravaRefresh
   end
 
   def run
-    activities = user.strava_client.list_athlete_activities after: 4.week.ago.to_i
-    user.add_log 'strava', 'GET list_athlete_activities'
+    activities = ApiWrapper::StravaApiWrapper.new(user).get_activities(after: 12.weeks.ago)
     max = 3
     activities.reverse.each do |activity|
       trip = user.trips.where(strava_id: activity['id'].to_s).first_or_initialize
@@ -20,8 +19,16 @@ class StravaRefresh
       end
       trip.save!
       update_weather(trip)
+      summarize_weather(trip)
       break if max == 0
     end
+  end
+
+  def summarize_weather(trip)
+    wc = WeatherComment.new(trip)
+    trip.temperature = wc.temperature
+    trip.icon = trip.weather_informations.map{|i| i.image_classes}.group_by{|c| c}.sort_by{|a,b| -b.count}.first.first
+    trip.save
   end
 
   def update_weather(trip)
