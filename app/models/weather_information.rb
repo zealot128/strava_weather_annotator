@@ -39,7 +39,9 @@ class WeatherInformation < ActiveRecord::Base
   def pressure
     standard = 1013.25
     p = data['currently']['pressure']
-    "#{(p).round}hPa <small>(#{ (p / standard).round(3)}x Norm)</small>"
+    if p
+      "#{(p).round}hPa <small>(#{ (p / standard).round(3)}x Norm)</small>"
+    end
   end
 
   def wind_speed
