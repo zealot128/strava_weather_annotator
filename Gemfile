@@ -28,12 +28,6 @@ group :production do
 end
 
 group :development do
-  gem 'capistrano'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano-rails-console'
-  gem 'capistrano-rvm'
-  gem "airbrussh", require: false
   gem 'quiet_assets'
 end
 group :development, :test do
