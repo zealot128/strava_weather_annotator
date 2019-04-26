@@ -19,20 +19,20 @@ class GpxFromTripStream
         xml.time do
           @trip.start_datetime.utc.iso8601
         end
-        xml.trk do
-          xml.name @trip.name
-          xml.type 1
-          xml.trkseg do
-            point_data.each do |pt|
-              xml.trkpt(lat: pt['latlng'][0], lon: pt['latlng'][1]) do
-                xml.ele pt['altitude']
-                xml.time((@trip.start_datetime + pt['time'].seconds).utc.iso8601)
-                xml.extensions do
-                  xml.tag!('gpxtpx:TrackPointExtension') do
-                    xml.tag!('gpxtpx:atemp', pt['temp']) if pt['temp']
-                    xml.tag!('gpxtpx:hr', pt['heartrate']) if pt['heartrate']
-                    xml.tag!('gpxtpx:cad', pt['cadence']) if pt['cadence']
-                  end
+      end
+      xml.trk do
+        xml.name @trip.name
+        xml.type 1
+        xml.trkseg do
+          point_data.each do |pt|
+            xml.trkpt(lat: pt['latlng'][0], lon: pt['latlng'][1]) do
+              xml.ele pt['altitude']
+              xml.time((@trip.start_datetime + pt['time'].seconds).utc.iso8601)
+              xml.extensions do
+                xml.tag!('gpxtpx:TrackPointExtension') do
+                  xml.tag!('gpxtpx:atemp', pt['temp']) if pt['temp']
+                  xml.tag!('gpxtpx:hr', pt['heartrate']) if pt['heartrate']
+                  xml.tag!('gpxtpx:cad', pt['cadence']) if pt['cadence']
                 end
               end
             end
@@ -53,5 +53,7 @@ class GpxFromTripStream
     stream = @trip.build_trip_stream(data: per_point)
     stream.save
     stream.data
+  rescue Strava::Api::V3::ClientError
+    []
   end
 end

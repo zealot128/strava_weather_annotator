@@ -1,0 +1,8 @@
+doctype html
+head
+  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  title Strava Weather - Derive
+body
+  div#background-map(data-ids='#{@trips.to_json}' style='height: 100vh')
+  = javascript_packs_with_chunks_tag 'heatmap'
+  = stylesheet_pack_tag 'heatmap'

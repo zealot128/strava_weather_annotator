@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   resources :trips, only: [:index, :show] do
     collection do
       post :refresh
+      get :heatmap
+    end
+    member do
+      get :gpx
     end
     get 'comment/new' => 'comments#new'
     post 'comment' => 'comments#create', as: :comment_create

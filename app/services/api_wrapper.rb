@@ -8,9 +8,8 @@ class ApiWrapper
   end
 
   class ApiWrapper::StravaApiWrapper < ApiWrapper
-
-    def get_activities(after: 8.weeks.ago)
-      activities = user.strava_client.list_athlete_activities after: 12.week.ago.to_i, per_page: 100
+    def get_activities(after: 8.weeks.ago, page: 1)
+      activities = user.strava_client.list_athlete_activities after: after, per_page: 100, page: page
       log 'GET list_athlete_activities'
       activities
     end

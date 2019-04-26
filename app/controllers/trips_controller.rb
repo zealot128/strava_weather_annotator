@@ -7,6 +7,17 @@ class TripsController < ApplicationController
     @api_allowance = ApiAllowance.new current_user
   end
 
+  def heatmap
+    @trips = current_user.trips.pluck(:id)
+    render layout: false
+  end
+
+  def gpx
+    @trip = current_user.trips.find params[:id]
+    xml = GpxFromTripStream.new(@trip).gpx
+    render xml: xml
+  end
+
   def show
     @trip = current_user.trips.find params[:id]
   end
@@ -19,5 +30,4 @@ class TripsController < ApplicationController
       redirect_to :trips, alert: 'Your daily Strava Quota is exhausted!'
     end
   end
-
 end

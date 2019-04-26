@@ -4,24 +4,28 @@ class StravaRefresh
     @user = user
   end
 
-  def run
-    activities = ApiWrapper::StravaApiWrapper.new(user).get_activities(after: 12.weeks.ago)
-    max = 3
+  def get_page(page)
+    activities = ApiWrapper::StravaApiWrapper.new(user).get_activities(after: 5.years.ago, page: page)
     activities.reverse_each do |activity|
+      next unless activity['type'].in?(['Run', 'Ride'])
+
       trip = user.trips.where(strava_id: activity['id'].to_s).first_or_initialize
       trip.name = activity['name']
       trip.start_datetime = Time.zone.parse(activity['start_date'])
       trip.activity_type = activity['type']
       trip.distance = activity['distance']
       trip.polyline = activity['map']['summary_polyline']
-      if trip.new_record?
-        max -= 1
-      end
       trip.save!
-      update_weather(trip)
-      summarize_weather(trip)
-      break if max == 0
+      # update_weather(trip)
+      # summarize_weather(trip)
     end
+    if activities.count == 100
+      get_page(page + 1)
+    end
+  end
+
+  def run
+    get_page(1)
   end
 
   def summarize_weather(trip)
