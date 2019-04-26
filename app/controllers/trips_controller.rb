@@ -1,5 +1,5 @@
 class TripsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   def index
     @trips = current_user.trips.order('start_datetime desc')

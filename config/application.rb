@@ -21,6 +21,5 @@ module StravaWeather
         request_specs: false
     end
     config.time_zone = 'Europe/Berlin'
-    config.active_record.raise_in_transactional_callbacks = true
   end
 end
