@@ -1,17 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.2'
-gem 'backport_new_renderer' # TODO Rails 5
+gem 'rails', '~> 5.0.1'
+# gem 'backport_new_renderer' # TODO Rails 5
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 
-group :development, :test do
-  gem 'web-console', '~> 2.0'
-end
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.4.0'
 gem 'bootswatch-rails'
 
 gem 'omniauth'
@@ -27,9 +24,6 @@ group :production do
   gem 'exception_notification'
 end
 
-group :development do
-  gem 'quiet_assets'
-end
 group :development, :test do
   gem 'faker'
   gem 'pry-rails'
