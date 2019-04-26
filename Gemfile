@@ -2,8 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 5.1.1'
-# gem 'backport_new_renderer' # TODO Rails 5
+gem 'rails', '~> 5.2.1'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -21,6 +20,8 @@ gem 'polylines'
 
 gem 'simple_form'
 gem 'slim-rails'
+gem 'bootsnap'
+gem 'webpacker', '~> 4.x'
 
 group :production do
   gem 'exception_notification'
@@ -31,6 +32,10 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
+  gem 'puma'
+end
+group :development do
+  gem 'listen'
 end
 group :test do
   gem 'capybara'
