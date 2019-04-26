@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.1'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+gem 'rails', '~> 5.1.1'
 # gem 'backport_new_renderer' # TODO Rails 5
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -12,8 +14,8 @@ gem 'bootstrap-sass', '~> 3.4.0'
 gem 'bootswatch-rails'
 
 gem 'omniauth'
-gem 'strava-api-v3', github: 'zealot128-os/strava-api-v3'
-gem 'omniauth-strava', github: 'zealot128-os/omniauth-strava'
+gem 'strava-api-v3', '~> 0.8'
+gem 'omniauth-strava', github: 'thogg4/omniauth-strava'
 gem 'forecast_io'
 gem 'polylines'
 

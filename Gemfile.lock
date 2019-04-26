@@ -1,62 +1,54 @@
 GIT
-  remote: git://github.com/zealot128-os/omniauth-strava.git
-  revision: a1266a0d60f1d80d72b6c8098e26dfcf5df8f5b8
+  remote: https://github.com/thogg4/omniauth-strava.git
+  revision: 0fe753324f3d748c4d1fec63f08478b9b526d40f
   specs:
     omniauth-strava (0.0.6)
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.0)
 
-GIT
-  remote: git://github.com/zealot128-os/strava-api-v3.git
-  revision: a21652b380fa8d8bee58395b754f9ff878a98ef3
-  specs:
-    strava-api-v3 (0.1.0)
-      httparty
-      multi_json
-
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (5.0.7.2)
-      actionpack (= 5.0.7.2)
-      nio4r (>= 1.2, < 3.0)
+    actioncable (5.1.7)
+      actionpack (= 5.1.7)
+      nio4r (~> 2.0)
       websocket-driver (~> 0.6.1)
-    actionmailer (5.0.7.2)
-      actionpack (= 5.0.7.2)
-      actionview (= 5.0.7.2)
-      activejob (= 5.0.7.2)
+    actionmailer (5.1.7)
+      actionpack (= 5.1.7)
+      actionview (= 5.1.7)
+      activejob (= 5.1.7)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 2.0)
-    actionpack (5.0.7.2)
-      actionview (= 5.0.7.2)
-      activesupport (= 5.0.7.2)
+    actionpack (5.1.7)
+      actionview (= 5.1.7)
+      activesupport (= 5.1.7)
       rack (~> 2.0)
-      rack-test (~> 0.6.3)
+      rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionview (5.0.7.2)
-      activesupport (= 5.0.7.2)
+    actionview (5.1.7)
+      activesupport (= 5.1.7)
       builder (~> 3.1)
-      erubis (~> 2.7.0)
+      erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    activejob (5.0.7.2)
-      activesupport (= 5.0.7.2)
+    activejob (5.1.7)
+      activesupport (= 5.1.7)
       globalid (>= 0.3.6)
-    activemodel (5.0.7.2)
-      activesupport (= 5.0.7.2)
-    activerecord (5.0.7.2)
-      activemodel (= 5.0.7.2)
-      activesupport (= 5.0.7.2)
-      arel (~> 7.0)
-    activesupport (5.0.7.2)
+    activemodel (5.1.7)
+      activesupport (= 5.1.7)
+    activerecord (5.1.7)
+      activemodel (= 5.1.7)
+      activesupport (= 5.1.7)
+      arel (~> 8.0)
+    activesupport (5.1.7)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    arel (7.1.4)
+    arel (8.0.0)
     autoprefixer-rails (9.5.1)
       execjs
     bootstrap-sass (3.4.1)
@@ -78,7 +70,7 @@ GEM
     crass (1.0.4)
     database_cleaner (1.7.0)
     diff-lcs (1.3)
-    erubis (2.7.0)
+    erubi (1.8.0)
     exception_notification (4.3.0)
       actionmailer (>= 4.0, < 6)
       activesupport (>= 4.0, < 6)
@@ -95,6 +87,10 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashie (3.6.0)
+    httmultiparty (0.3.16)
+      httparty (>= 0.7.3)
+      mimemagic
+      multipart-post
     httparty (0.17.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -115,6 +111,7 @@ GEM
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.0331)
+    mimemagic (0.3.3)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
@@ -148,28 +145,28 @@ GEM
       pry (>= 0.12.0)
     public_suffix (3.0.3)
     rack (2.0.7)
-    rack-test (0.6.3)
-      rack (>= 1.0)
-    rails (5.0.7.2)
-      actioncable (= 5.0.7.2)
-      actionmailer (= 5.0.7.2)
-      actionpack (= 5.0.7.2)
-      actionview (= 5.0.7.2)
-      activejob (= 5.0.7.2)
-      activemodel (= 5.0.7.2)
-      activerecord (= 5.0.7.2)
-      activesupport (= 5.0.7.2)
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
+    rails (5.1.7)
+      actioncable (= 5.1.7)
+      actionmailer (= 5.1.7)
+      actionpack (= 5.1.7)
+      actionview (= 5.1.7)
+      activejob (= 5.1.7)
+      activemodel (= 5.1.7)
+      activerecord (= 5.1.7)
+      activesupport (= 5.1.7)
       bundler (>= 1.3.0)
-      railties (= 5.0.7.2)
+      railties (= 5.1.7)
       sprockets-rails (>= 2.0.0)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
-    railties (5.0.7.2)
-      actionpack (= 5.0.7.2)
-      activesupport (= 5.0.7.2)
+    railties (5.1.7)
+      actionpack (= 5.1.7)
+      activesupport (= 5.1.7)
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
@@ -226,6 +223,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    strava-api-v3 (0.8.0)
+      httmultiparty
+      multi_json
     temple (0.8.1)
     thor (0.20.3)
     thread_safe (0.3.6)
@@ -261,12 +261,12 @@ DEPENDENCIES
   polylines
   pry-rails
   pry-rescue
-  rails (~> 5.0.1)
+  rails (~> 5.1.1)
   rspec-rails
   sass-rails (~> 5.0)
   simple_form
   slim-rails
-  strava-api-v3!
+  strava-api-v3 (~> 0.8)
   turbolinks
   uglifier (>= 1.3.0)
 
