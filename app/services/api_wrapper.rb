@@ -17,16 +17,17 @@ class ApiWrapper
     def fetch_description(trip)
       response = api.retrieve_an_activity(trip.strava_id)
       log "GET retrieve_an_activity #{trip.strava_id}"
-      text = response['description']
-      trip.description = text
-      trip.save
-      text
+      trip.description = response['description']
+      trip.name = response['name']
+      trip.save if trip.changed?
+      trip.description
     end
 
-    def update_description(trip, text)
-      data = api.update_an_activity(trip.strava_id, description: text)
+    def update_description(trip, text, name)
+      data = api.update_an_activity(trip.strava_id, description: text, name: name)
       log "PUT update_an_activity #{trip.strava_id}"
       trip.description = data['description']
+      trip.name = data['name']
       trip.save
     end
 

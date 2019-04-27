@@ -4,7 +4,8 @@
     p
       | Start-Time: #{l @trip.start_datetime}
   .panel-body
-    = simple_format @trip.as_comment
+    - if @trip.weather_informations.any?
+      = simple_format @trip.as_comment
 
     table.table
       thead
@@ -19,14 +20,13 @@
           th pressure
       tbody
         = render @trip.weather_informations
-  .panel-footer
-
-
-    p
-      = link_to @trip.strava_url, class: 'btn btn-default' do
-        | View on Strava
-      = ' '
+  .panel-footer: .btn-group
+    - if current_user.quota.can_forecast? and @trip.weather_informations.blank?
+      = link_to [:weather, @trip], class: 'btn btn-primary', data: { method: :post } do
+        | Update Weather Information
+    - else
       = link_to trip_comment_new_path(@trip), class: 'btn btn-primary' do
-        | Edit description / add weather comment
+        | Add weather comment to Strava Trip
 
-
+    = link_to @trip.strava_url, class: 'btn btn-default' do
+      | View on Strava

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_200707) do
+ActiveRecord::Schema.define(version: 2019_04_27_212343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_jieba"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_200707) do
     t.string "temperature"
     t.string "icon"
     t.boolean "commented_posted"
+    t.boolean "weather_comment_added", default: false
     t.index ["user_id"], name: "index_trips_on_user_id"
   end
 
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_200707) do
     t.datetime "updated_at", null: false
     t.string "access_token"
     t.string "profile_picture_url"
+    t.text "weather_template"
   end
 
   create_table "weather_informations", id: :serial, force: :cascade do |t|

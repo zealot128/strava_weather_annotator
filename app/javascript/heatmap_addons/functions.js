@@ -56,7 +56,6 @@ export function addAllTripsToMap(tripIds, map, helpModal) {
   Promise.all(allPromises).then(() => {
     console.log('finished loading')
     map.center()
-    map.map.setZoom(10)
     map.map.invalidateSize()
     helpModal.close()
   })

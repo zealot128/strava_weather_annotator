@@ -5,18 +5,27 @@ class WeatherComment
   end
 
   def render
-    <<-DOC.strip_heredoc
-      #{summary.join('/')}
-      Temperature: #{temperature},
-      rel.Hum.: #{humidity},
-      Wind: #{wind}, #{wind_bearing.join('/')}
-
-      #{@wi.map{|i|i.data['flags']['metno-license']}.uniq.to_sentence}
-    DOC
+    tp = @trip.user.weather_template || User.default_weather_template
+    license = @wi.map { |i| i.data['flags']['metno-license'] }.uniq.to_sentence
+    tp.gsub(/{{([^{]+)}}/) do |_|
+      case $1
+      when 'summary' then summary.join(', ')
+      when 'temperature' then temperature
+      when 'humidity' then humidity
+      when 'wind' then wind
+      when 'bearing' then wind_bearing.join('/')
+      when 'rain'
+        if rain
+          "☔#{rain}"
+        end
+      else
+        ""
+      end
+    end + "\n\n" + license
   end
 
   def wind
-    bfts = @wi.map{|i| i.bft}.uniq.sort
+    bfts = @wi.map(&:bft).uniq.sort
     if bfts.count == 1
       "#{bfts.first} Bft"
     else
@@ -24,29 +33,40 @@ class WeatherComment
     end
   end
 
+  def rain
+    per_datapoint = @wi.map { |i| i.data['currently']['precipIntensity'] }.compact
+    return nil if per_datapoint.length == 0 || per_datapoint.uniq == [0]
+
+    rain = per_datapoint.max
+    "#{rain}mm/h"
+  end
+
   def wind_bearing
-    @wi.map(&:wind_bearing).group_by{|a|a}.sort_by{|a,b| -b.count }.map(&:first)
+    @wi.map(&:wind_bearing).group_by { |a| a }.sort_by { |_a, b| -b.count }.map(&:first)
   end
 
   def humidity
-    hums = @wi.map{|i| i.data['currently']['humidity'].round(2)}.uniq.sort
-    if hums.count == 1
+    hums = @wi.map { |i| i.data['currently']['humidity'].round(2) }.uniq.sort
+    if hums.count == 0
+      ""
+    elsif hums.count == 1
       "#{(hums.first * 100).round}%"
     else
-      "#{(hums.first * 100).round}%-#{(hums.last * 100).round}%"
+      mean = (hums.sum.to_f / hums.length) * 100
+      "#{mean.round}%"
     end
   end
 
   def summary
-    @wi.map{|i| i.data['currently']['summary']}.uniq
+    @wi.map { |i| i.data['currently']['summary'] }.uniq
   end
 
   def temperature
-    temperatures = @wi.map{|i| i.data['currently']['temperature'].round}.uniq
-    if temperatures.count == 0
+    temperatures = @wi.map { |i| i.data['currently']['temperature'].round }.map(&:round).uniq
+    if temperatures.count == 0 || temperatures.min == temperatures.max
       temperatures.first.to_s + "°C"
     else
-      "#{temperatures.min}°C to #{temperatures.max}°C"
+      "#{temperatures.min}-#{temperatures.max}°C"
     end
   end
 end

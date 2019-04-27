@@ -3,5 +3,6 @@ h2 Update trip description
 p Confirm or modify the weather information. It will be added to your trip's description:
 
 = simple_form_for @comment, url: trip_comment_create_path(@trip) do |f|
+  = f.input :name
   = f.input :text, as: :text, input_html: { rows: 10 }, label: 'Description'
   = f.submit "Save Trip-Description on Strava", class: 'btn btn-primary'

@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new(params[:comment].permit!)
     @comment.trip = trip
     @comment.save
     redirect_to trip, notice: "Comment updated successfully!"

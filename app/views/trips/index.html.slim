@@ -20,13 +20,19 @@ h1 Recent Trips
               i.climacon<>(class='#{trip.icon}')
               small= trip.temperature
 
-    - if @api_allowance.can_strava?
-      p = link_to refresh_trips_path, data: { method: :post, 'disable-with' => "Loading..." }, class: 'btn btn-primary' do
-        | Refresh 3 more trips + weather (also update old trip's title)
-
   .col-sm-4
+    .panel.panel-default: .panel-body
+      - if @api_allowance.can_strava?
+        p
+          small Sync all trips from the last 7 days from Strava
+          div
+            = link_to refresh_trips_path, data: { method: :post, 'disable-with' => "Loading..." }, class: 'btn btn-primary' do
+              | Refresh trips from Strava
+      - if @trips.length > 0
+        = link_to '/trips/heatmap', class: 'btn btn-default' do
+          |Heatmap
 
-    p
+    .panel.panel-default: .panel-body
       span.glyphicon.glyphicon-question-sign> data-toggle="tooltip" title='This app depends on Strava + Forecast.io web sites. Those Websites have a limit of requests per day that we can use. The available requests are shared equally by all users'
       |Daily API-Usage
       br
@@ -36,7 +42,6 @@ h1 Recent Trips
         - max = @api_allowance.max_strava_calls
         | #{calls} / #{max}
         .progress-bar role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: #{calls * 100 / max}%;"
-      br
       small Forecast.io
       .progress
         - calls = @api_allowance.forecast_calls

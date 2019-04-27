@@ -2,22 +2,23 @@
 #
 # Table name: trips
 #
-#  id               :integer          not null, primary key
-#  activity_type    :string
-#  commented_posted :boolean
-#  date             :string
-#  description      :text
-#  distance         :float
-#  icon             :string
-#  link             :string
-#  name             :string
-#  polyline         :text
-#  start_datetime   :datetime
-#  temperature      :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  strava_id        :string
-#  user_id          :integer
+#  id                    :integer          not null, primary key
+#  activity_type         :string
+#  commented_posted      :boolean
+#  date                  :string
+#  description           :text
+#  distance              :float
+#  icon                  :string
+#  link                  :string
+#  name                  :string
+#  polyline              :text
+#  start_datetime        :datetime
+#  temperature           :string
+#  weather_comment_added :boolean          default(FALSE)
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  strava_id             :string
+#  user_id               :integer
 #
 # Indexes
 #
@@ -37,6 +38,10 @@ class Trip < ActiveRecord::Base
 
   def strava_url
     "https://www.strava.com/activities/#{strava_id}"
+  end
+
+  def update_weather_async
+    UpdateWeatherJob.perform_later(id)
   end
 
   def has_weather_comment?

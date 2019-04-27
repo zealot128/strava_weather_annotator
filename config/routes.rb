@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
     member do
       get :gpx
+      post :weather
     end
     get 'comment/new' => 'comments#new'
     post 'comment' => 'comments#create', as: :comment_create
