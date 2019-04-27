@@ -1,6 +1,28 @@
+# == Schema Information
+#
+# Table name: weather_informations
+#
+#  id         :integer          not null, primary key
+#  data       :json
+#  datetime   :datetime
+#  lat        :float
+#  lon        :float
+#  offset     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  trip_id    :integer
+#
+# Indexes
+#
+#  index_weather_informations_on_trip_id  (trip_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (trip_id => trips.id)
+#
+
 class WeatherInformation < ActiveRecord::Base
   belongs_to :trip
-
 
   def image_classes
     case data['currently']['icon']
@@ -40,7 +62,7 @@ class WeatherInformation < ActiveRecord::Base
     standard = 1013.25
     p = data['currently']['pressure']
     if p
-      "#{(p).round}hPa <small>(#{ (p / standard).round(3)}x Norm)</small>"
+      "#{p.round}hPa <small>(#{(p / standard).round(3)}x Norm)</small>"
     end
   end
 
@@ -58,7 +80,7 @@ class WeatherInformation < ActiveRecord::Base
 
   def bft
     s = data['currently']['windSpeed']
-    ((s / 0.8360 )**(Rational(2,3))).round
+    ((s / 0.8360)**Rational(2, 3)).round
   end
 
   def wind_bearing
@@ -73,8 +95,8 @@ class WeatherInformation < ActiveRecord::Base
       [315, 'NW'],
       [360, 'N'],
     ]
-    if s=data['currently']['windBearing']
-      matrix.sort_by{|degree, _| (degree - s).abs }.first[1]
+    if s = data['currently']['windBearing']
+      matrix.min_by { |degree, _| (degree - s).abs }[1]
     end
   end
 

@@ -1,10 +1,39 @@
+# == Schema Information
+#
+# Table name: trips
+#
+#  id               :integer          not null, primary key
+#  activity_type    :string
+#  commented_posted :boolean
+#  date             :string
+#  description      :text
+#  distance         :float
+#  icon             :string
+#  link             :string
+#  name             :string
+#  polyline         :text
+#  start_datetime   :datetime
+#  temperature      :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  strava_id        :string
+#  user_id          :integer
+#
+# Indexes
+#
+#  index_trips_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+
 class Trip < ActiveRecord::Base
   belongs_to :user
   has_many :weather_informations, dependent: :destroy
   has_one :trip_stream, dependent: :destroy
 
-  has_one_attached :original_route_file
-  has_one_attached :converted_gpx_file
+  has_one_attached :gpx_file
 
   def strava_url
     "https://www.strava.com/activities/#{strava_id}"

@@ -105,4 +105,7 @@ Rails.application.configure do
       ignore_exceptions: ['ActionController::BadRequest'] + ExceptionNotifier.ignored_exceptions,
       ignore_crawlers: true
     }
+
+  config.active_job.queue_adapter = :sucker_punch
+  SuckerPunch.exception_handler = ->(ex, klass, args) { ExceptionNotifier.notify_exception(ex, klass: klass, args: args) }
 end

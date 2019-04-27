@@ -14,8 +14,8 @@ class TripsController < ApplicationController
 
   def gpx
     @trip = current_user.trips.find params[:id]
-    xml = GpxFromTripStream.new(@trip).gpx
-    render xml: xml
+    blob = GpxFromTripStream.new(@trip).saved_gpx
+    redirect_to blob
   end
 
   def show

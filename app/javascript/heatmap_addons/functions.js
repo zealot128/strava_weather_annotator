@@ -7,7 +7,11 @@ export const extractAndAddGPXFromUrl = (url) => new Promise((resolve, reject) =>
         if (err) {
           reject(err);
         } else if (result.gpx) {
-          resolve(extractGPXTracks(result.gpx)[0]);
+          try {
+            resolve(extractGPXTracks(result.gpx)[0]);
+          } catch(e) {
+            reject(e)
+          }
         } else {
           reject(new Error('Invalid file type.'));
         }
@@ -15,27 +19,45 @@ export const extractAndAddGPXFromUrl = (url) => new Promise((resolve, reject) =>
     })
   })
 
+const pLimit = require('p-limit');
+
 export function addAllTripsToMap(tripIds, map, helpModal) {
-  if (tripIds && tripIds.length > 0) {
-    const allPromises = tripIds.map(t => {
-      return extractAndAddGPXFromUrl(`/trips/${t}/gpx.xml`).then(track => {
-        try {
-          map.addTrack(track);
-        } catch(e) {
-          console.log("SKIP")
-        }
-      }).catch((e) => {
-        console.log("ERROR CATCHED");
-        return Promise.resolve(123)
-      })
-    })
-    Promise.all(allPromises).then(() => {
-      console.log('finished loading')
-      map.center()
-      map.map.setZoom(10)
-      map.map.invalidateSize()
-      helpModal.close()
-      window.map = map
-    })
+  const progress = document.getElementById('progress')
+  progress.max = tripIds.length
+  document.getElementById('progress-help-text').innerHTML = `Importing GPX files from ${tripIds.length} trips. This can take a while, especially, if run first time - Then we must download the whole data from Strava.`
+  const limit = pLimit(5);
+
+  if (tripIds && tripIds.length === 0) {
+    return
   }
+  const extractTripAndAddToMapPromise = (trip) => {
+    return extractAndAddGPXFromUrl(`/trips/${trip}/gpx.xml`).
+      then(track => {
+        progress.value += 1
+        if (progress.value % 10 === 0) {
+          map.center()
+        }
+        try {
+          return map.addTrack(track)
+        } catch(e) {
+          return Promise.resolve(true)
+        }
+      }).
+      catch(e => {
+        progress.value += 1
+        return Promise.resolve(true)
+      })
+  }
+
+  const allPromises = tripIds.map(t => {
+    return limit(() => extractTripAndAddToMapPromise(t) )
+  })
+
+  Promise.all(allPromises).then(() => {
+    console.log('finished loading')
+    map.center()
+    map.map.setZoom(10)
+    map.map.invalidateSize()
+    helpModal.close()
+  })
 }

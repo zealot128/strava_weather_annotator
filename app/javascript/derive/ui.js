@@ -24,9 +24,10 @@ const AVAILABLE_THEMES = [
 const MODAL_CONTENT = {
   help: `
 <h1>dérive</h1>
-<p>All imported strava activities will be imported</p>
+<p>All imported strava activities will be imported into the heatmap.</p>
 <p>Algorithm by <a href='https://github.com/erik/derive'>Derive</a></p>
-<p>You can close this window</p>
+<progress id='progress' max="100" value="0"></progress>
+<div id='progress-help-text'></div>
 `,
 
   exportImage: `

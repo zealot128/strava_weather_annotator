@@ -4,28 +4,43 @@ class StravaRefresh
     @user = user
   end
 
+  def create_or_update_activity(activity)
+    trip = user.trips.where(strava_id: activity['id'].to_s).first_or_initialize
+    trip.name = activity['name']
+    trip.start_datetime = Time.zone.parse(activity['start_date'])
+    trip.activity_type = activity['type']
+    trip.distance = activity['distance']
+    trip.polyline = activity['map']['summary_polyline']
+    trip.save! if trip.changed?
+    # update_weather(trip)
+    # summarize_weather(trip)
+    trip
+  end
+
+  def get_recent
+    date = user.api_logs.where(provider: 'strava', title: "GET list_athlete_activities").maximum(:created_at) || 1.month.ago
+    activities = ApiWrapper::StravaApiWrapper.new(user).get_activities(after: date)
+    activities.reverse_each do |activity|
+      next unless activity['type'].in?(['Run', 'Ride'])
+
+      create_or_update_activity(activity)
+    end
+  end
+
+  def get_all
+    get_page(1)
+  end
+
   def get_page(page)
     activities = ApiWrapper::StravaApiWrapper.new(user).get_activities(after: 5.years.ago, page: page)
     activities.reverse_each do |activity|
       next unless activity['type'].in?(['Run', 'Ride'])
 
-      trip = user.trips.where(strava_id: activity['id'].to_s).first_or_initialize
-      trip.name = activity['name']
-      trip.start_datetime = Time.zone.parse(activity['start_date'])
-      trip.activity_type = activity['type']
-      trip.distance = activity['distance']
-      trip.polyline = activity['map']['summary_polyline']
-      trip.save!
-      # update_weather(trip)
-      # summarize_weather(trip)
+      create_or_update_activity(activity)
     end
     if activities.count == 100
       get_page(page + 1)
     end
-  end
-
-  def run
-    get_page(1)
   end
 
   def summarize_weather(trip)

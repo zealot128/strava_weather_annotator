@@ -17,6 +17,7 @@ gem 'strava-api-v3', '~> 0.8'
 gem 'omniauth-strava', github: 'thogg4/omniauth-strava'
 gem 'forecast_io'
 gem 'polylines'
+gem 'sucker_punch', '~> 2.0'
 
 gem 'simple_form'
 gem 'slim-rails'
@@ -36,6 +37,7 @@ group :development, :test do
 end
 group :development do
   gem 'listen'
+  gem 'annotate'
 end
 group :test do
   gem 'capybara'
