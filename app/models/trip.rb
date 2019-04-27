@@ -45,10 +45,10 @@ class Trip < ActiveRecord::Base
   end
 
   def has_weather_comment?
-    description && (
+    weather_comment_added || (description && (
       description.include?('Weather summary') ||
       description.include?('rel.Hum')
-    )
+    ))
   end
 
   def as_comment

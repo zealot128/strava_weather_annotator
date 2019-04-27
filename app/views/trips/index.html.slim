@@ -15,7 +15,7 @@ h1 Recent Trips
             |km
           .pull-right
             - if trip.has_weather_comment?
-              span.glyphicon.glyphicon-ok<> title='Weather description already updated on Strava'
+              span.glyphicon.glyphicon-ok<> title='Weather description already updated on Strava' data-toggle='tooltip'
             - if trip.temperature?
               i.climacon<>(class='#{trip.icon}')
               small= trip.temperature
