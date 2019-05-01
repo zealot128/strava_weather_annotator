@@ -1,17 +1,13 @@
-nav.navbar.navbar-default
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
   .container
-    .navbar-header
-      button.navbar-toggle[type="button" data-toggle="collapse" data-target=".navbar-collapse"]
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
+    a.navbar-brand href="/"  Home
+    button.navbar-toggler aria-controls="navbarSupportedContent" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarSupportedContent" data-toggle="collapse" type="button"
+      span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
         - if user_signed_in?
-          li = link_to 'Trips', trips_path
-          li = link_to 'Sign out', signout_path
+          li.nav-item = link_to 'Trips', trips_path, class: 'nav-link'
+          li.nav-item = link_to 'Sign out', signout_path, class: 'nav-link'
         - else
-          li = link_to 'Sign in', signin_path
-        li = link_to 'About', '/about'
+          li.nav-item = link_to 'Sign in', signin_path, class: 'nav-link'
+        li.nav-item = link_to 'About', '/about', class: 'nav-link'
