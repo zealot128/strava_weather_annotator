@@ -1,28 +1,28 @@
-- if !@_last_year || @_last_year != trip.start_datetime.year
-  h2 = trip.start_datetime.year
-- if !@_last_month || @_last_month != trip.start_datetime.month
-  h3 = l(trip.start_datetime, format: '%B')
-- @_last_year = trip.start_datetime.year
-- @_last_month = trip.start_datetime.month
-.panel.panel-default
-  .panel-heading.clearfix
-    .row
-      .col-sm-9
-        h3.panel-title(style='line-height: 1.3')
-          small>
-            = l(trip.start_datetime, format: :long)
+.side
+  - if !@_last_year || @_last_year != trip.start_datetime.year
+    h2.h2 = trip.start_datetime.year
+  - if !@_last_month || @_last_month != trip.start_datetime.month
+    h3.h4 = l(trip.start_datetime, format: '%B')
+  - @_last_year = trip.start_datetime.year
+  - @_last_month = trip.start_datetime.month
+.list-group-item
+  .row
+    .col-sm-9
+      h3.h5(style='line-height: 1.3')
+        small>
+          = l(trip.start_datetime, format: :long)
+        br
+        = link_to trip do
+          = trip.name
+    .col-sm-3.text-right
+      weather-outline(data-polyline='#{trip.polyline.to_json}')
+      div
+        small<
+          = (trip.distance / 1000).round
+          |km
+        - if trip.temperature?
           br
-          = link_to trip do
-            = trip.name
-      .col-sm-3.text-right
-        weather-outline(data-polyline='#{trip.polyline.to_json}')
-        div
-          small<
-            = (trip.distance / 1000).round
-            |km
-          - if trip.temperature?
-            br
-            small.text-muted
-              i.climacon<>(class='#{trip.icon}')
-              = ' '
-              = trip.temperature
+          small.text-muted
+            i.climacon<>(class='#{trip.icon}')
+            = ' '
+            = trip.temperature

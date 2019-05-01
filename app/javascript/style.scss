@@ -1,6 +1,6 @@
-@import "~bootswatch/dist/lux/variables";
+@import "~bootswatch/dist/superhero/variables";
 @import "~bootstrap/scss/bootstrap";
-@import "~bootswatch/dist/lux/bootswatch";
+@import "~bootswatch/dist/superhero/bootswatch";
 
 @import 'climacons';
 
@@ -9,12 +9,18 @@ main {
   margin-top: 51px; // accommodate the navbar
 }
 
-// footer {
-//   background: $navbar-inverse-bg;
-//   color: $navbar-inverse-color;
-//   a:link {
-//     color: $navbar-inverse-link-color;
-//   }
-//   // background-color: $navbar-inverse-c
-// }
 
+.trips-list-group {
+  position: relative;
+  display: block;
+  .side {
+    position: absolute;
+    width: 150px;
+  }
+  .list-group-item {
+    margin-left: 150px;
+  }
+
+}
+
+ul.pagination { margin-bottom: 0 }

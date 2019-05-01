@@ -4,11 +4,13 @@ h1 Recent Trips
   .col-sm-8
     - if @trips.blank?
       p.alert.alert-warning No trips yet, try refreshing. Only trips from the last 2 weeks will be shown here.
-    = render @trips
-    == pagy_bootstrap_nav(@pagy)
+    .list-group.trips-list-group
+      = render @trips
+      .list-group-item.pt-3
+        == pagy_bootstrap_nav(@pagy)
 
   .col-sm-4
-    .panel.panel-default: .panel-body
+    .card: .card-body
       - if @api_allowance.can_strava?
         p
           small Sync all trips from the last 7 days from Strava
@@ -19,7 +21,7 @@ h1 Recent Trips
         = link_to '/trips/heatmap', class: 'btn btn-default' do
           |Heatmap
 
-    .panel.panel-default: .panel-body
+    .card: .card-body
       span.glyphicon.glyphicon-question-sign> data-toggle="tooltip" title='This app depends on Strava + Forecast.io web sites. Those Websites have a limit of requests per day that we can use. The available requests are shared equally by all users'
       |Daily API-Usage
       br

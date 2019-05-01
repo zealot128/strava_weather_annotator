@@ -1,9 +1,9 @@
-.panel.panel-default
-  .panel-heading
+.card
+  .card-header
     h2 = @trip.name
     p
       | Start-Time: #{l @trip.start_datetime}
-  .panel-body
+  .card-body
     - if @trip.weather_informations.any?
       = simple_format @trip.as_comment
 
@@ -20,7 +20,7 @@
           th pressure
       tbody
         = render @trip.weather_informations
-  .panel-footer: .btn-group
+  .card-footer: .btn-group
     - if current_user.quota.can_forecast? and @trip.weather_informations.blank?
       = link_to [:weather, @trip], class: 'btn btn-primary', data: { method: :post } do
         | Update Weather Information
