@@ -1,3 +1,9 @@
+- if !@_last_year || @_last_year != trip.start_datetime.year
+  h2 = trip.start_datetime.year
+- if !@_last_month || @_last_month != trip.start_datetime.month
+  h3 = l(trip.start_datetime, format: '%B')
+- @_last_year = trip.start_datetime.year
+- @_last_month = trip.start_datetime.month
 .panel.panel-default
   .panel-heading.clearfix
     .row
