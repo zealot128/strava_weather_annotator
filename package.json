@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@mapbox/polyline": "^1.0.0",
     "@rails/webpacker": "^4.0.2",
     "axios": "^0.18.0",
     "bootstrap": "4.0",
@@ -15,6 +16,9 @@
     "pako": "^1.0.10",
     "picomodal": "^3.0.0",
     "prettier": "^1.17.0",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {

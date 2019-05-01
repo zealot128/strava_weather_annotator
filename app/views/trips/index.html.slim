@@ -4,21 +4,8 @@ h1 Recent Trips
   .col-sm-8
     - if @trips.blank?
       p.alert.alert-warning No trips yet, try refreshing. Only trips from the last 2 weeks will be shown here.
-    - @trips.each do |trip|
-      .panel.panel-default
-        .panel-heading: h3.panel-title
-          small> = l(trip.start_datetime, format: :short)
-          = link_to trip do
-            = trip.name
-          small<
-            = (trip.distance / 1000).round(1)
-            |km
-          .pull-right
-            - if trip.has_weather_comment?
-              span.glyphicon.glyphicon-ok<> title='Weather description already updated on Strava' data-toggle='tooltip'
-            - if trip.temperature?
-              i.climacon<>(class='#{trip.icon}')
-              small= trip.temperature
+    = render @trips
+    == pagy_bootstrap_nav(@pagy)
 
   .col-sm-4
     .panel.panel-default: .panel-body
@@ -52,3 +39,5 @@ javascript:
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+
+= javascript_pack_tag 'homepage'
