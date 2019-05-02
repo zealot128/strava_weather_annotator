@@ -7,6 +7,8 @@
     - if @trip.weather_informations.any?
       = simple_format @trip.as_comment
 
+    details-map(data-trip='#{@trip.to_json}' data-weather-points='#{@weather.to_json}')
+
     table.table
       thead
         tr
@@ -19,7 +21,7 @@
           th cloud cover
           th pressure
       tbody
-        = render @trip.weather_informations
+        = render @weather
   .card-footer: .btn-group
     - if current_user.quota.can_forecast? and @trip.weather_informations.blank?
       = link_to [:weather, @trip], class: 'btn btn-primary', data: { method: :post } do
@@ -30,3 +32,6 @@
 
     = link_to @trip.strava_url, class: 'btn btn-default' do
       | View on Strava
+
+  = javascript_pack_tag 'homepage'
+  = stylesheet_pack_tag 'homepage'

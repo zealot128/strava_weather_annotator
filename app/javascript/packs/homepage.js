@@ -1,14 +1,11 @@
-import Vue from 'vue'
+import automount from 'utils/automount'
 import WeatherOutline from 'homepage/WeatherOutline'
+import DetailsMap from 'homepage/DetailsMap'
+
+import 'utils/leaflet'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const elements = document.querySelectorAll('weather-outline')
-  elements.forEach(el => {
-    const polyline = JSON.parse(el.dataset.polyline)
-    new Vue({
-      el,
-      render: h => h(WeatherOutline, { props: { polyline } })
-    })
-  })
+  automount('weather-outline', WeatherOutline, ['polyline'])
+  automount('details-map', DetailsMap, ['trip', 'weatherPoints'])
 })
 

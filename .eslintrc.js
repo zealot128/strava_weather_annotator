@@ -1,7 +1,9 @@
 module.exports = {
   "extends": [
     "airbnb-base",
+    "plugin:vue/recommended",
     "prettier",
+    "prettier/vue"
   ],
   "globals": {
     OneDrive: true,
@@ -37,6 +39,11 @@ module.exports = {
     "max-len": ["warn", 200],
     "no-else-return": 0,
     "func-names": ["warn", "as-needed"],
+    "vue/valid-template-root": 0,
+    "vue/max-attributes-per-line": ["error", {
+      "singleline": 3
+    }],
+    "vue/singleline-html-element-content-newline": 0,
     "quotes": 0
   }
 };

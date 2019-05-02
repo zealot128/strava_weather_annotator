@@ -41,13 +41,13 @@ class WeatherInformation < ActiveRecord::Base
   end
 
   def precip_intensity
-    if data['currently']['precipIntensity'] > 0
+    if data['currently']['precipIntensity'].to_f > 0
       "#{data['currently']['precipIntensity'].round(2)}mm/h"
     end
   end
 
   def precip_probability
-    (data['currently']['precipProbability'] * 100).round
+    (data['currently']['precipProbability'].to_f * 100).round
   end
 
   def humidity

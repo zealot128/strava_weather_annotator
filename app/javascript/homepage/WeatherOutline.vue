@@ -1,5 +1,6 @@
 <template>
   <svg
+    class='weather-outline'
     ref="target"
     style="height: 50px"
     preserveAspectRatio="xMinYMin meet"
@@ -17,12 +18,14 @@ export default {
 };
 </script>
 
-<style>
-g {
-  fill: none;
-}
-path {
-  stroke: #000000;
-  stroke-width: 1;
+<style lang='scss'>
+.weather-outline {
+  g {
+    fill: none;
+  }
+  path {
+    stroke: #000000;
+    stroke-width: 1;
+  }
 }
 </style>

@@ -32,6 +32,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = current_user.trips.find params[:id]
+    @weather = @trip.weather_informations.order('datetime').group_by(&:datetime).values.map(&:first)
   end
 
   def refresh
