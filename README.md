@@ -7,6 +7,14 @@
 
 - visit https://strava-weather.stefanwienert.de for live demo
 
+
+## Screenshots
+
+![](https://raw.githubusercontent.com/zealot128/strava_weather_annotator/master/app/assets/images/demo_trips.png)
+![](https://raw.githubusercontent.com/zealot128/strava_weather_annotator/master/app/assets/images/demo_map.png)
+![](https://raw.githubusercontent.com/zealot128/strava_weather_annotator/master/app/assets/images/demo_update.png)
+
+
 ## Ideas for future development
 
 I have NO plan to make a product or anything out of it. If you just want to know a future trips weather condition go ahead and use Epic Ride Weather.
