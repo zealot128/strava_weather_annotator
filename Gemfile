@@ -23,6 +23,8 @@ end
 
 group :development, :test do
   gem 'faker'
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
