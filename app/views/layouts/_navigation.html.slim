@@ -6,6 +6,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
         - if user_signed_in?
+          li.nav-item = link_to 'Settings', '/user/edit', class: 'nav-link'
           li.nav-item = link_to 'Trips', trips_path, class: 'nav-link'
           li.nav-item = link_to 'Sign out', signout_path, class: 'nav-link'
         - else

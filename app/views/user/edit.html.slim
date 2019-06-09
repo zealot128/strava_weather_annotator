@@ -1,0 +1,45 @@
+.container
+  h2 Settings
+
+
+  = simple_form_for @user do |f|
+    .row
+      .col-sm-6
+        = f.input :weather_template, label: "Template for the weather comment description", input_html: { rows: 5 }
+        = f.submit "Save", class: 'btn btn-primary'
+      .col-sm-6
+        blockquote.blockquote
+          small Vorschau
+          pre#comment(style='overflow: hidden')
+        br
+
+        .small.help-block: code.code
+          strong Available tokens:
+          br
+          |{{summary}}
+          br
+          |{{temperature}}
+          br
+          |{{humidity}}
+          br
+          |{{wind}} {{bearing}} {{bearing-arrow}}
+          br
+          |{{resistance}}
+          br
+          |{{rain}}
+          br
+          |{{pressure}}
+
+javascript:
+  $(function() {
+  $('[name*=weather_template]').on('keyup', function() {
+    var val = $(this).val()
+    $.ajax({
+      url: "/user/preview.json",
+      data: { weather_template: val },
+      success: function(d) {
+        $('#comment').html(d.comment)
+      }
+    })
+  })
+  })

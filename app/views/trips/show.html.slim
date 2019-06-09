@@ -4,6 +4,8 @@
     p
       | Start-Time: #{l @trip.start_datetime}
   .card-body
+    - if @trip.weather_enqueued_on? and @trip.weather_enqueued_on > 5.minutes.ago
+      .alert.alert-info The weather information for this trip is refreshed right now in the background. Reload this page in 1 minute to see results.
     - if @trip.weather_informations.any?
       = simple_format @trip.as_comment
 
@@ -14,12 +16,13 @@
         tr
           th time
           th
-          th temp
-          th precip
-          th wind
-          th humidity
-          th cloud cover
-          th pressure
+          th Temp
+          th Precip
+          th Wind
+          th Humidity
+          th Cloud cover
+          th Pressure
+          th Density of Air
       tbody
         = render @weather
   .card-footer: .btn-group

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   get '/auth/failure' => 'sessions#failure'
   get '/about' => "pages#about"
 
+  resource :user, only: [:edit, :update], controller: :user
+  get 'user/preview' => 'user#preview'
+
   resources :trips, only: [:index, :show] do
     collection do
       post :refresh

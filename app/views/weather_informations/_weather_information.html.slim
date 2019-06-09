@@ -19,5 +19,15 @@ tr.weather-information
   td
     = weather_information.cloud_cover
   td
-    = raw weather_information.pressure
+    = number_to_unit weather_information.raw_pressure.round, 'hPa', precision: 0
+    br
+    small(title='Compared to 1013.25hp norm pressure')
+      = number_to_percentage (weather_information.raw_pressure / 1013.25 * 100).round(2), precision: 0
+  td
+    span(title='Difficulty compared to standard conditions of 1.2kg/m³' data-toggle='tooltip')
+      = number_to_percentage (weather_information.density_of_air[:difficulty] * 100).round(1), precision: 0
+    br
+    small(title='Air density ρ (rho) in kg/m³' data-toggle='tooltip')
+      = number_to_unit weather_information.density_of_air[:rho].round(2), 'kg/m³'
+
 

@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    redirect_to '/auth/github'
+    redirect_to '/auth/strava'
   end
 
   def create

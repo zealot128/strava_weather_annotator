@@ -66,6 +66,10 @@ class WeatherInformation < ActiveRecord::Base
     end
   end
 
+  def raw_pressure
+    data['currently']['pressure']
+  end
+
   def wind_speed
     s = data['currently']['windSpeed']
     "#{s.round(1)} m/s (#{bft} Bft)"
@@ -102,6 +106,35 @@ class WeatherInformation < ActiveRecord::Base
 
   def si?
     data['flags']['units'] == 'si'
+  end
+
+  def density_of_air
+    druck_in_hpa = data['currently']['pressure']
+    druck = druck_in_hpa * 100
+    t = temperature_celsius + 273.15
+    rel_feuchte = data['currently']['humidity']
+
+    saettigungsdampfdruck = Math.exp(
+      -6094.4642 * t**-1 + 21.1249952 - 2.7245552 * 10**-2 * t + 1.6853396 * 10**-5 * t**2 + 2.4575506 * Math.log(t)
+    )
+
+    rl = 287.058
+    rd = 461.523
+
+    rf = rl / (1 - rel_feuchte * saettigungsdampfdruck / druck * (1 - rl / rd))
+    rho = druck.to_f / (rf * t)
+    {
+      rho: rho,
+      difficulty: rho / 1.2
+    }
+  end
+
+  def temperature_celsius
+    if si?
+      data['currently']['temperature'].round(1)
+    else
+      raise NotImplementedError
+    end
   end
 
   def temperature

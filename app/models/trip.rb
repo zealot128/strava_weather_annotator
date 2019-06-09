@@ -15,6 +15,7 @@
 #  start_datetime        :datetime
 #  temperature           :string
 #  weather_comment_added :boolean          default(FALSE)
+#  weather_enqueued_on   :datetime
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  strava_id             :string
@@ -41,6 +42,9 @@ class Trip < ActiveRecord::Base
   end
 
   def update_weather_async
+    return if weather_enqueued_on? and weather_enqueued_on > 10.minutes.ago
+
+    update(weather_enqueued_on: Time.zone.now)
     UpdateWeatherJob.perform_later(id)
   end
 

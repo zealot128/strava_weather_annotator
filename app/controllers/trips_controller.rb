@@ -7,6 +7,11 @@ class TripsController < ApplicationController
     @pagy, @trips = pagy current_user.trips.order('start_datetime desc')
 
     @api_allowance = ApiAllowance.new current_user
+    last_refresh = current_user.api_logs.where(provider: 'strava').order('created_at desc').where(title: 'GET list_athlete_activities').maximum(:created_at)
+    if last_refresh < 6.hours.ago and @api_allowance.can_strava?
+      flash.now[:notice] = "Welcome back! your trips are refreshed in Background. Please refresh soon"
+      UpdateImportJob.perform_later(current_user.id)
+    end
   end
 
   def heatmap

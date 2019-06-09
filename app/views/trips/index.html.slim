@@ -11,12 +11,12 @@ h1 Recent Trips
 
   .col-sm-4
     .card: .card-body
-      - if @api_allowance.can_strava?
-        p
-          small Sync all trips from the last 7 days from Strava
-          div
-            = link_to refresh_trips_path, data: { method: :post, 'disable-with' => "Loading..." }, class: 'btn btn-primary' do
-              | Refresh trips from Strava
+      / - if @api_allowance.can_strava?
+      /   p
+      /     small Sync all trips from the last 7 days from Strava
+      /     div
+      /       = link_to refresh_trips_path, data: { method: :post, 'disable-with' => "Loading..." }, class: 'btn btn-primary' do
+      /         | Refresh trips from Strava
       - if @trips.length > 0
         = link_to '/trips/heatmap', class: 'btn btn-default' do
           |Heatmap
