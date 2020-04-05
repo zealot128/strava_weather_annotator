@@ -19,6 +19,7 @@ gem 'webpacker', '~> 4.x'
 
 group :production do
   gem 'exception_notification'
+  gem "whenever", require: false
 end
 
 group :development, :test do
@@ -40,3 +41,4 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
 end
+
