@@ -16,8 +16,8 @@ class UserController < ApplicationController
       trips.
       joins(:weather_informations).
       group(:id).
-      order(Arel.sql 'random()').
-      first || Trip.order(Arel.sql 'random()').joins(:weather_informations).group(:id).first
+      order(Arel.sql('random()')).
+      first || Trip.order(Arel.sql('random()')).joins(:weather_informations).group(:id).first
     render json: { comment: WeatherComment.new(trip).render }
   end
 end
