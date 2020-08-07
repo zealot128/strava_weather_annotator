@@ -9,7 +9,8 @@ class SessionsController < ApplicationController
                       uid: auth['uid'].to_s).first || User.create_with_omniauth(auth)
     user.profile_picture_url = auth.extra.raw_info.profile_medium
     user.access_token = auth.credentials.token
-    user.save
+    user.refresh_token = auth.credentials.refresh_token
+    user.save if user.changed?
     reset_session
     session[:user_id] = user.id
     if user.created_at > 5.minutes.ago
@@ -27,5 +28,8 @@ class SessionsController < ApplicationController
 
   def failure
     redirect_to root_url, alert: "Authentication error: #{params[:message].humanize}"
+  end
+
+  def webhook
   end
 end
