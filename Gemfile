@@ -7,7 +7,7 @@ gem 'pg'
 gem 'pagy'
 
 gem 'omniauth'
-gem 'strava-api-v3', '~> 0.8'
+gem 'strava-ruby-client'
 gem 'omniauth-strava', github: 'thogg4/omniauth-strava'
 gem 'forecast_io'
 gem 'sucker_punch', '~> 2.0'

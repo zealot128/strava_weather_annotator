@@ -1,6 +1,4 @@
-class CommentsController < ApplicationController
-  before_action :authenticate_user!
-
+class CommentsController < SignedInController
   def new
     @comment = Comment.new
     @comment.trip = trip

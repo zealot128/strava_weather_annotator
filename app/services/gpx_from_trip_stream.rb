@@ -36,6 +36,8 @@ class GpxFromTripStream
         xml.type 1
         xml.trkseg do
           point_data.each do |pt|
+            next if pt['latlng'].nil?
+
             xml.trkpt(lat: pt['latlng'][0], lon: pt['latlng'][1]) do
               xml.ele pt['altitude']
               xml.time((@trip.start_datetime + pt['time'].seconds).utc.iso8601)
@@ -59,13 +61,15 @@ class GpxFromTripStream
   end
 
   def download_stream_data
-    data = @trip.user.strava_client.retrieve_activity_streams(@trip.strava_id, 'time,distance,altitude,latlng,heartrate,cadence,temp')
+    data = ApiWrapper::StravaApiWrapper.new(@trip.user).activity_streams(@trip.strava_id, 'time,distance,altitude,latlng,heartrate,cadence,temp')
+
     @trip.user.add_log 'strava', "GET retrieve_activity_streams #{@trip.strava_id}"
-    per_point = data.first['data'].count.times.map { |i| data.map { |j| [j['type'], j['data'][i]] }.to_h }
+    per_point = data.to_h[data.keys.first]['data'].count.times.map { |i| data.transform_values { |v| v['data'][i] } }
     stream = @trip.build_trip_stream(data: per_point)
     stream.save
     stream.data
-  rescue Strava::Api::V3::ClientError
+  rescue StandardError => e
+    binding.pry
     []
   end
 end

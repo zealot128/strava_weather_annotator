@@ -1,7 +1,6 @@
-class TripsController < ApplicationController
+class TripsController < SignedInController
   include Pagy::Backend
   helper Pagy::Frontend
-  before_action :authenticate_user!
 
   def index
     @pagy, @trips = pagy current_user.trips.order('start_datetime desc')

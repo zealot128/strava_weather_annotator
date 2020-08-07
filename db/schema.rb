@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_09_111657) do
+ActiveRecord::Schema.define(version: 2020_08_07_211251) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_jieba"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -47,9 +46,23 @@ ActiveRecord::Schema.define(version: 2019_06_09_111657) do
     t.index ["user_id", "date", "provider"], name: "index_api_logs_on_user_id_and_date_and_provider"
   end
 
+  create_table "strava_webhook_events", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "object_type"
+    t.string "object_id"
+    t.string "aspect_type"
+    t.jsonb "updates"
+    t.string "owner_id"
+    t.integer "subscription_id"
+    t.datetime "event_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_strava_webhook_events_on_user_id"
+  end
+
   create_table "trip_streams", force: :cascade do |t|
     t.bigint "trip_id"
-    t.jsonb "data"
+    t.json "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trip_id"], name: "index_trip_streams_on_trip_id"
@@ -85,6 +98,9 @@ ActiveRecord::Schema.define(version: 2019_06_09_111657) do
     t.string "access_token"
     t.string "profile_picture_url"
     t.text "weather_template"
+    t.string "refresh_token"
+    t.datetime "access_token_expires_at"
+    t.string "strava_webhook_id"
   end
 
   create_table "weather_informations", id: :serial, force: :cascade do |t|
@@ -100,6 +116,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_111657) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "strava_webhook_events", "users"
   add_foreign_key "trip_streams", "trips"
   add_foreign_key "trips", "users"
   add_foreign_key "weather_informations", "trips"

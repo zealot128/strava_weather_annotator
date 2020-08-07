@@ -12,7 +12,7 @@ class StravaRefresh
   def create_or_update_activity(activity)
     trip = user.trips.where(strava_id: activity['id'].to_s).first_or_initialize
     trip.name = activity['name']
-    trip.start_datetime = Time.zone.parse(activity['start_date'])
+    trip.start_datetime = activity['start_date']
     trip.activity_type = activity['type']
     trip.distance = activity['distance']
     trip.polyline = activity['map']['summary_polyline']

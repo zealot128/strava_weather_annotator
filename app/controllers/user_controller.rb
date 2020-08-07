@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class UserController < SignedInController
   def edit
     @user = current_user
     @user.weather_template ||= @user.class.default_weather_template

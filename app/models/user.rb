@@ -2,20 +2,24 @@
 #
 # Table name: users
 #
-#  id                  :integer          not null, primary key
-#  access_token        :string
-#  name                :string
-#  profile_picture_url :string
-#  provider            :string
-#  uid                 :string
-#  weather_template    :text
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
+#  id                      :integer          not null, primary key
+#  access_token            :string
+#  access_token_expires_at :datetime
+#  name                    :string
+#  profile_picture_url     :string
+#  provider                :string
+#  refresh_token           :string
+#  uid                     :string
+#  weather_template        :text
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  strava_webhook_id       :string
 #
 
 class User < ActiveRecord::Base
   has_many :trips, dependent: :destroy
   has_many :api_logs, dependent: :destroy
+  has_many :strava_webhook_events, dependent: :destroy
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -44,6 +48,25 @@ class User < ActiveRecord::Base
   end
 
   def strava_client
-    @strava_client ||= Strava::Api::V3::Client.new(access_token: access_token)
+    if access_token_expires_at && access_token_expires_at.past?
+      refresh_token!
+    end
+    @strava_client ||= Strava::Api::Client.new(access_token: access_token)
+  end
+
+  def refresh_token!
+    client = Strava::OAuth::Client.new(
+      client_id: Rails.application.secrets.strava_client_id,
+      client_secret: Rails.application.secrets.strava_api_key
+    )
+    response = client.oauth_token(
+      refresh_token: refresh_token,
+      grant_type: 'refresh_token'
+    )
+    @strava_client = nil
+    self.refresh_token = response.refresh_token
+    self.access_token = response.access_token
+    self.access_token_expires_at = response.expires_at
+    save(validate: false)
   end
 end

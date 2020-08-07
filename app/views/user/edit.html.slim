@@ -2,33 +2,47 @@
   h2 Settings
 
 
-  = simple_form_for @user do |f|
-    .row
-      .col-sm-6
-        = f.input :weather_template, label: "Template for the weather comment description", input_html: { rows: 5 }
-        = f.submit "Save", class: 'btn btn-primary'
-      .col-sm-6
-        blockquote.blockquote
-          small Vorschau
-          pre#comment(style='overflow: hidden')
-        br
+  .card: .card-body
+    strong Weather-Comment Template
+    = simple_form_for @user do |f|
+      .row
+        .col-sm-6
+          = f.input :weather_template, label: "Template for the weather comment description", input_html: { rows: 5 }
+          = f.submit "Save", class: 'btn btn-primary'
+        .col-sm-6
+          blockquote.blockquote
+            small Vorschau
+            pre#comment(style='overflow: hidden')
+          br
 
-        .small.help-block: code.code
-          strong Available tokens:
-          br
-          |{{summary}}
-          br
-          |{{temperature}}
-          br
-          |{{humidity}}
-          br
-          |{{wind}} {{bearing}} {{bearing-arrow}}
-          br
-          |{{resistance}}
-          br
-          |{{rain}}
-          br
-          |{{pressure}}
+          .small.help-block: code.code
+            strong Available tokens:
+            br
+            |{{summary}}
+            br
+            |{{temperature}}
+            br
+            |{{humidity}}
+            br
+            |{{wind}} {{bearing}} {{bearing-arrow}}
+            br
+            |{{resistance}}
+            br
+            |{{rain}}
+            br
+            |{{pressure}}
+
+  .card: .card-body
+    strong Webhook
+
+    p Automatically receive new activities from strava in real time.
+
+    - if @user.strava_webhook_id
+      = link_to user_webhook_path, data: { method: :delete }, class: 'btn btn-outline-warning btn-large' do
+        |Disable webhook
+    - else
+      = link_to user_webhook_path, data: { method: :post }, class: 'btn btn-outline-primary btn-large' do
+        |Enable webhook
 
 javascript:
   $(function() {

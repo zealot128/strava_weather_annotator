@@ -81,6 +81,8 @@ GEM
       i18n (>= 0.7)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.14.0)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.10.0)
     forecast_io (2.0.2)
       faraday
@@ -89,13 +91,6 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashie (3.6.0)
-    httmultiparty (0.3.16)
-      httparty (>= 0.7.3)
-      mimemagic
-      multipart-post
-    httparty (0.17.0)
-      mime-types (~> 3.0)
-      multi_xml (>= 0.5.2)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     interception (0.5)
@@ -112,9 +107,6 @@ GEM
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (0.9.2)
-    mime-types (3.2.2)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.0331)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
@@ -224,9 +216,11 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    strava-api-v3 (0.8.0)
-      httmultiparty
-      multi_json
+    strava-ruby-client (0.3.2)
+      activesupport
+      faraday (>= 0.9)
+      faraday_middleware
+      hashie
     sucker_punch (2.1.1)
       concurrent-ruby (~> 1.0)
     temple (0.8.1)
@@ -272,7 +266,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-commands-rspec
-  strava-api-v3 (~> 0.8)
+  strava-ruby-client
   sucker_punch (~> 2.0)
   webpacker (~> 4.x)
   whenever

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create, :backdoor]
+
   def new
     redirect_to '/auth/strava'
   end
@@ -30,6 +32,11 @@ class SessionsController < ApplicationController
     redirect_to root_url, alert: "Authentication error: #{params[:message].humanize}"
   end
 
-  def webhook
+  def backdoor
+    raise unless Rails.env.development?
+
+    user = User.first!
+    session[:user_id] = user.id
+    redirect_to trips_url, notice: 'Signed in! All recent trips since last login will be imported.'
   end
 end

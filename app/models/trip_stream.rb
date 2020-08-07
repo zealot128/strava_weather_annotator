@@ -3,7 +3,7 @@
 # Table name: trip_streams
 #
 #  id         :bigint           not null, primary key
-#  data       :jsonb
+#  data       :json
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  trip_id    :bigint
