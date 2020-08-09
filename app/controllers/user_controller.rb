@@ -18,6 +18,8 @@ class UserController < SignedInController
       group(:id).
       order(Arel.sql('random()')).
       first || Trip.order(Arel.sql('random()')).joins(:weather_informations).group(:id).first
-    render json: { comment: WeatherComment.new(trip).render }
+    render json: {
+      comment: WeatherComment.new(trip).render
+    }
   end
 end

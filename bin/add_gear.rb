@@ -1,4 +1,4 @@
-# update boke to all previous
+# update all activities after to a date to bike
 user = User.first
 api = user.strava_client
 response = api.retrieve_current_athlete

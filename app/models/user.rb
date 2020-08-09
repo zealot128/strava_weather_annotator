@@ -34,8 +34,14 @@ class User < ActiveRecord::Base
 
   def self.default_weather_template
     <<-DOC.strip_heredoc
-      {{summary}}
-      🌡️{{temperature}} – 💧Hum {{humidity}} – 🌬️ {{wind}}  {{bearing}} – {{rain}}
+      {{summary-icon}}
+      {%- if true %}🌡️{{temperature}} {% endif %}
+      {%- if true %}🌬️ {{wind}}bft{{bearing-arrow}} {%- endif %}
+      {%- if resistance < 100 || resistance > 101 %}{{resistance}}% Resistance{%- endif %}
+
+      Pressure: {{pressure | divided_by: 1000.0 | round: 1}}bar
+      Humidity: {{humidity}}%
+      Conditions: {{summary}}
     DOC
   end
 

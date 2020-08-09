@@ -8,6 +8,8 @@ class WebhookController < ApplicationController
 
   def callback
     user = User.find_by(uid: params[:user_id])
+    Rails.logger.info("WEBHOOK: #{request.body}")
+    File.write("tmp/#{Digest::MD5.hexdigest(request.body)}.webhook", request.body)
     event = Strava::Webhooks::Models::Event.new(JSON.parse(request.body))
     ev = StravaWebhookEvent.new(user: user)
     ev.assign_attributes(event.to_h)

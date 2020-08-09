@@ -11,6 +11,8 @@ class ApiWrapper
     def activity_streams(trip_id, keys)
       log "GET activity"
       api.activity_streams(trip_id, keys: keys)
+    rescue Faraday::ResourceNotFound
+      []
     end
 
     def get_activities(after: 8.weeks.ago, page: 1)

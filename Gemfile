@@ -42,3 +42,5 @@ group :test do
   gem 'database_cleaner'
 end
 
+
+gem "liquid", "~> 4.0"
