@@ -101,7 +101,25 @@ class WeatherComment
     @wi.map { |i| i.data['currently']['summary'] }.uniq
   end
 
+  def temperature_from_gpx
+    return nil if @trip.trip_stream.blank?
+
+    min, max = @trip.trip_stream.data.map { |i| i['temp'] }.compact.group_by(&:itself).transform_values(&:count).sort_by { |a, b| -b }.take(5).map(&:first).minmax
+    return nil if min.nil?
+
+    if min + 2 >= max
+      mean([min, max])
+    elsif min == max
+      min
+    else
+      "#{min}-#{max}"
+    end
+  end
+
   def temperature
+    if temperature_from_gpx
+      return temperature_from_gpx + "°C"
+    end
     temperatures = @wi.map { |i| i.data['currently']['temperature'].round }.map(&:round).uniq
     if temperatures.count == 0 || temperatures.min == temperatures.max
       temperatures.first.to_s + "°C"
