@@ -20,7 +20,7 @@
     "picomodal": "^3.0.0",
     "popper.js": "^1.15.0",
     "prettier": "^1.17.0",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "rails-ujs": "^5.2.3",
     "ts-loader": "^5.4.5",
